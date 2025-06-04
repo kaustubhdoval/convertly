@@ -5,6 +5,12 @@ export const YtToMp3 = () => {
     <>
       <div className={styles.container}>
         <h1>YT To MP3</h1>
+        <input
+          type="text"
+          placeholder="YouTube Link"
+          className={styles.linkInput}
+        />
+        <button>Download Audio</button>
       </div>
     </>
   );

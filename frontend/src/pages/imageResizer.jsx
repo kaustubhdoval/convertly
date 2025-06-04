@@ -59,8 +59,14 @@ export const ImageResizer = () => {
       a.click();
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Error during resizing:", error);
-      alert("Error resizing images. Please try again.");
+      console.error("Error details:", error);
+      if (error.message.includes("Failed to fetch")) {
+        alert(
+          "Cannot connect to server. Please make sure the backend is running."
+        );
+      } else {
+        alert(`Error resizing images: ${error.message}`);
+      }
     }
   };
 
@@ -68,6 +74,7 @@ export const ImageResizer = () => {
     <div className={styles.container}>
       <h1>Image Resizer</h1>
       <input
+        className={styles.fileInput}
         type="file"
         multiple
         accept="image/*"

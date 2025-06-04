@@ -12,7 +12,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"], # Default Localhost for Vite
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
     expose_headers=["Content-Disposition"],
 )
@@ -58,12 +58,19 @@ async def resize_images(
             if resize_width and resize_height:
                 img = img.resize((resize_width, resize_height))
 
+            # Get the original file extension
+            filename = file.filename or "file"
+            file_ext = os.path.splitext(filename)[1][1:].lower()  # e.g. 'jpg', 'png'
+            
+            # Handle cases where extension might be empty or not recognized
+            if not file_ext or file_ext not in ['jpg', 'jpeg', 'png', 'gif', 'bmp']:
+                file_ext = 'png'  # default to png if unknown
+
             output_bytes = io.BytesIO()
-            img.save(output_bytes)
+            img.save(output_bytes, format=file_ext)
             output_bytes.seek(0)
 
-            filename = file.filename or "file"
-            new_filename = f"{os.path.splitext(filename)[0]}"
+            new_filename = f"{os.path.splitext(filename)[0]}.{file_ext}"
             zipf.writestr(new_filename, output_bytes.read())
 
     zip_io.seek(0)

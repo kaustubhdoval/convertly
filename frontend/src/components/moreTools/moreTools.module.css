@@ -25,3 +25,9 @@ h3 {
   color: var(--text-color);
   margin-top: 0.2rem;
 }
+
+.bigFish button:hover {
+  background-color: grey;
+  color: var(--color-bg);
+  transition: 0.5s ease-in-out;
+}
