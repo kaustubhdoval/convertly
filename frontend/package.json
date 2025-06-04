@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node start-dev.js",
-    "frontend": "vite",
     "backend": "cd ../backend && uvicorn main:app --reload",
+    "frontend": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

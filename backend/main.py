@@ -63,8 +63,8 @@ async def resize_images(
             file_ext = os.path.splitext(filename)[1][1:].lower()  # e.g. 'jpg', 'png'
             
             # Handle cases where extension might be empty or not recognized
-            if not file_ext or file_ext not in ['jpg', 'jpeg', 'png', 'gif', 'bmp']:
-                file_ext = 'png'  # default to png if unknown
+            if not file_ext or file_ext not in ['jpeg', 'png', 'gif', 'bmp']:
+                file_ext = 'jpeg'  # default to jpeg if unknown
 
             output_bytes = io.BytesIO()
             img.save(output_bytes, format=file_ext)

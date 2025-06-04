@@ -5,14 +5,14 @@ async function runProcesses() {
     await concurrently(
       [
         {
-          command: "vite",
-          name: "FRONTEND",
-          prefixColor: "blue",
-        },
-        {
           command: "cd ../backend && python -m uvicorn main:app --reload",
           name: "BACKEND",
           prefixColor: "green",
+        },
+        {
+          command: "vite",
+          name: "FRONTEND",
+          prefixColor: "blue",
         },
       ],
       {
