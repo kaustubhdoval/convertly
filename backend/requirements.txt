@@ -2,3 +2,7 @@ fastapi
 uvicorn
 pillow
 python-multipart
+yt_dlp
+tempfile
+ffmpeg
+asyncio

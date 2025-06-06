@@ -1,8 +1,11 @@
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import StreamingResponse
 from PIL import Image
 import os, io, zipfile
 import uvicorn
+import yt_dlp
+import tempfile
+import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -16,6 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["Content-Disposition"],
 )
+
+# Explicitly set the port of Backend to 8000
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
 
 @app.post("/convert")
 async def convert_images(
@@ -80,6 +87,58 @@ async def resize_images(
         headers={"Content-Disposition": "attachment; filename=resized_images.zip"}
     )
 
-# Explicitly set the port to 8000
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+@app.post("/yt_to_mp3")
+async def yt_to_mp3(yt_link: str = Form(...)):
+    try:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            ydl_opts = {
+                'format': 'ba',
+                'outtmpl': os.path.join(temp_dir, '%(title)s.%(ext)s'),
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                }],
+                'quiet': True,
+                'no_warnings': True,
+            }
+
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(yt_link, download=True)
+                # Get the actual filename that was downloaded
+                downloaded_file = ydl.prepare_filename(info)
+                mp3_file = os.path.splitext(downloaded_file)[0] + '.mp3'
+
+                # DEBUG STATEMENTS   
+                print(f"Downloaded file: {downloaded_file}")
+                print(f"Expected MP3 path: {mp3_file}")
+                print(f"Exists: {os.path.exists(mp3_file)}")
+
+                # Wait until file exists (post-processing takes time)
+                for _ in range(10):
+                    if os.path.exists(mp3_file):
+                        break
+                    await asyncio.sleep(0.5)
+                else:
+                    raise HTTPException(status_code=500, detail="Conversion timeout")
+
+                with open(mp3_file, "rb") as f:
+                    file_content = f.read()
+
+                if info is not None and isinstance(info, dict):
+                    filename = info.get('title', 'audio') + '.mp3'
+                else:
+                    filename = 'audio.mp3'
+
+                return StreamingResponse(
+                    content=io.BytesIO(file_content),
+                    media_type="audio/mpeg",
+                    headers={
+                        "Content-Disposition": f"attachment; filename=\"{filename}\"",
+                    }
+                )
+
+    except yt_dlp.utils.DownloadError as e:
+        raise HTTPException(status_code=400, detail=f"Download error: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+
