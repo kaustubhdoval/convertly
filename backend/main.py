@@ -109,9 +109,9 @@ async def yt_to_mp3(yt_link: str = Form(...)):
                 mp3_file = os.path.splitext(downloaded_file)[0] + '.mp3'
 
                 # DEBUG STATEMENTS   
-                print(f"Downloaded file: {downloaded_file}")
-                print(f"Expected MP3 path: {mp3_file}")
-                print(f"Exists: {os.path.exists(mp3_file)}")
+                # print(f"Downloaded file: {downloaded_file}")
+                # print(f"Expected MP3 path: {mp3_file}")
+                # print(f"Exists: {os.path.exists(mp3_file)}")
 
                 # Wait until file exists (post-processing takes time)
                 for _ in range(10):
@@ -142,3 +142,53 @@ async def yt_to_mp3(yt_link: str = Form(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
+@app.post("/yt_to_mp4")
+async def yt_to_mp4(yt_link: str = Form(...)):
+    try:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            ydl_opts = {
+                'format': 'mp4/b',
+                'outtmpl': os.path.join(temp_dir, '%(title)s.%(ext)s'),
+                'quiet': True,
+                'no_warnings': True,
+            }
+
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(yt_link, download=True)
+                # Get the actual filename that was downloaded
+                downloaded_file = ydl.prepare_filename(info)
+                mp4_file = os.path.splitext(downloaded_file)[0] + '.mp4'
+
+                # DEBUG STATEMENTS   
+                # print(f"Downloaded file: {downloaded_file}")
+                # print(f"Expected MP4 path: {mp4_file}")
+                # print(f"Exists: {os.path.exists(mp4_file)}")
+
+                # Wait until file exists (post-processing takes time)
+                for _ in range(10):
+                    if os.path.exists(mp4_file):
+                        break
+                    await asyncio.sleep(0.5)
+                else:
+                    raise HTTPException(status_code=500, detail="Conversion timeout")
+
+                with open(mp4_file, "rb") as f:
+                    file_content = f.read()
+
+                if info is not None and isinstance(info, dict):
+                    filename = info.get('title', 'video') + '.mp4'
+                else:
+                    filename = 'video.mp4'
+
+                return StreamingResponse(
+                    content=io.BytesIO(file_content),
+                    media_type="video/mp4",
+                    headers={
+                        "Content-Disposition": f"attachment; filename=\"{filename}\"",
+                    }
+                )
+
+    except yt_dlp.utils.DownloadError as e:
+        raise HTTPException(status_code=400, detail=f"Download error: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")

@@ -10,7 +10,7 @@ export const YtToMp3 = () => {
 
   const handleDownload = async () => {
     if (!yt_link) {
-      alert("Please enter a Link");
+      alert("Please Enter a Link");
       return;
     }
 
