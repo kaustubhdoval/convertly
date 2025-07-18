@@ -7,17 +7,21 @@ import yt_dlp
 import tempfile
 import asyncio
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+from pathlib import Path
 
 app = FastAPI()
+load_dotenv(dotenv_path=Path( "../frontend/.env"))  # Load environment variables from .env file
 
-# Enable CORS for local development
+origin = os.getenv("VITE_FRONTEND_URL", "http://localhost:5173")   # Default to localhost if not set
+
+# Enable CORS 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"], # Default Localhost for Vite
+    allow_origins=origin,  # Or ["*"] to allow all
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
+    allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["Content-Disposition"],
 )
 
 # Explicitly set the port of Backend to 8000

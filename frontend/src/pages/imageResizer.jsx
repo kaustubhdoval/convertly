@@ -42,6 +42,7 @@ export const ImageResizer = () => {
       if (height) formData.append("resize_height", height.toString());
 
       const API_URL = import.meta.env.VITE_API_URL;
+
       const response = await fetch(`${API_URL}/resize`, {
         method: "POST",
         body: formData,

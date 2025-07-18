@@ -3,6 +3,7 @@ uvicorn
 pillow
 python-multipart
 yt_dlp
-tempfile
 ffmpeg
 asyncio
+dotenv
+pathlib
