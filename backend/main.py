@@ -8,17 +8,14 @@ import tempfile
 import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from pathlib import Path
 
 app = FastAPI()
-load_dotenv(dotenv_path=Path( "../frontend/.env"))  # Load environment variables from .env file
-
-origin = os.getenv("VITE_FRONTEND_URL", "http://localhost:5173")   # Default to localhost if not set
+frontend_origin = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
 # Enable CORS 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origin,  # Or ["*"] to allow all
+    allow_origins=[frontend_origin],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

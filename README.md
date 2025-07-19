@@ -39,11 +39,8 @@ To run the project locally in dev-mode, **cd into frontend**: <br/>
 The existing start-dev.js file should startup both the backend and frontend services. The frontend should be available at `localhost:5173`
 
 **To Run as a Docker Container**
-Simply go to root directory and run `docker-compose build` and then `docker-compose up` to build and run the container.
+Simply go to root directory and run `docker compose up` to build and run the container.
 The Frontend Service will startup at `https://<container_computer>:3000` and the Backend API will be available at `https://<container_computer>:8000`
-
-_container_computer obviously being the IP address of the computer the docker containers are running on_
-**Update the .env file with appropriate variables** (its in the /frontend directory)
 
 ## Roadmap
 

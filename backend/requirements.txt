@@ -6,4 +6,4 @@ yt_dlp
 ffmpeg
 asyncio
 dotenv
-pathlib
+python-dotenv
