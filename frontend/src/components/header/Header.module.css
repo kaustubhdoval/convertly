@@ -7,14 +7,14 @@
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  z-index: 10;
+  z-index: 20;
   padding: 0.2rem 2rem;
   border-radius: 50px;
   margin-top: 1rem;
 
   background: rgba(231, 226, 226, 0.05);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .container a {
