@@ -2,7 +2,8 @@
   /* Colors */
   --color-bg: #000000;
   --color-text: #ffffff;
-  --color-action: #0077ff9d;
+  --color-action: rgb(84, 27, 134);
+  --color-action-rgb: 84, 27, 134;
 
   /* Fonts */
   --font-inter: "inter";

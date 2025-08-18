@@ -18,6 +18,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/convert-image" element={<ConvertImages />} />
         <Route path="/resize-image" element={<ImageResizer />} />
         <Route path="/yt-to-mp3" element={<YtToMp3 />} />
         <Route path="/yt-to-mp4" element={<YtToMp4 />} />

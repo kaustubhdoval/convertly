@@ -12,9 +12,13 @@
   border-radius: 50px;
   margin-top: 1rem;
 
-  background: rgba(231, 226, 226, 0.034);
+  background: rgba(231, 226, 226, 0.05);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
+}
+
+.container a {
+  text-decoration: none;
 }
 
 .credit {
@@ -27,11 +31,15 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .social a {
   display: inline-block;
+  color: var(--color-text);
   transition: transform 0.25s ease-in-out;
+  height: max-content;
 }
 
 .social a:hover {

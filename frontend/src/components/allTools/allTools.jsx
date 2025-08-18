@@ -7,14 +7,13 @@ export const AllTools = () => {
     {
       toolType: "Convert",
       title: "Convert Images",
-      description:
-        "Easy tool to batch convert images to and from JPG, PNG, WEBP and ICO",
-      link: "/convert-images",
+      description: "Batch convert images to and from JPG, PNG, WEBP and ICO",
+      link: "/convert-image",
     },
     {
       toolType: "Resize",
       title: "Resize Images",
-      description: "Easy tool to Resize images to exact dimensions",
+      description: "Tool to Resize images to exact dimensions",
       link: "/resize-image",
     },
   ];
@@ -23,13 +22,13 @@ export const AllTools = () => {
     {
       toolType: "Download MP3",
       title: "YT to MP3",
-      description: "Easily download Audio from Youtube Videos",
+      description: "Download Audio (MP3) from Youtube Videos",
       link: "/yt-to-mp3",
     },
     {
       toolType: "Download MP4",
       title: "YT to MP4",
-      description: "Easily download Videos from Youtube Videos",
+      description: "Download Videos (MP4) from Youtube Videos",
       link: "/yt-to-mp4",
     },
   ];
