@@ -1,7 +1,7 @@
 :root {
   /* Colors */
-  --color-bg: whitesmoke;
-  --color-text: #201909;
+  --color-bg: #000000;
+  --color-text: #ffffff;
   --color-action: #0077ff9d;
 
   /* Fonts */

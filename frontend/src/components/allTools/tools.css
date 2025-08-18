@@ -1,0 +1,41 @@
+@import "../../vars.css";
+
+.bigBoy {
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 3rem;
+}
+
+.bigBoy h2 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.toolContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.card {
+  width: 30%;
+  padding: 1.5rem 2rem;
+  border: 2px solid rgb(140, 140, 140);
+  border-radius: 20px;
+}
+
+.card .title {
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.card .description {
+  font-size: 1rem;
+}
+
+.card a {
+  color: var(--color-text);
+}

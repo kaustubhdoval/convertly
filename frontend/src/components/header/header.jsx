@@ -9,9 +9,9 @@ export const Header = () => {
       <div className={styles.social}>
         <a href="https://github.com/kaustubhdoval/convertly" target="_blank">
           <img
-            height="38"
-            width="38"
-            src="https://cdn.simpleicons.org/github/black"
+            height="30"
+            width="30"
+            src="https://cdn.simpleicons.org/github/white"
           />
         </a>
       </div>
