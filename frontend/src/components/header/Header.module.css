@@ -1,28 +1,45 @@
 @import "../../vars.css";
 
 .container {
-  width: 80%;
-  margin-left: 10%;
+  width: 45%;
+  margin-left: 27.5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 35px;
+  position: fixed;
+  z-index: 10;
+  padding: 0.2rem 2rem;
+  border-radius: 50px;
+  margin-top: 1rem;
+
+  background: rgba(231, 226, 226, 0.05);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.container a {
+  text-decoration: none;
 }
 
 .credit {
-  font-size: r3.5em;
+  font-size: 1.5rem;
   font-weight: 100;
+  color: var(--color-text);
 }
 
 .social {
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .social a {
   display: inline-block;
+  color: var(--color-text);
   transition: transform 0.25s ease-in-out;
+  height: max-content;
 }
 
 .social a:hover {
