@@ -30,9 +30,8 @@ if __name__ == "__main__":
 async def convert_images(
     files: list[UploadFile] = File(...),
     output_format: str = Form(...),
-):
+):  
     zip_io = io.BytesIO()
-
     with zipfile.ZipFile(zip_io, mode='w') as zipf:
         for file in files:
             img = Image.open(file.file)
