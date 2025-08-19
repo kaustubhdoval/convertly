@@ -3,6 +3,7 @@ import styles from "./pages.module.css";
 
 export const YtToMp4 = () => {
   const [yt_link, setYtLink] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLinkChange = (e) => {
     setYtLink(e.target.value);
@@ -13,6 +14,8 @@ export const YtToMp4 = () => {
       alert("Please Enter a Link");
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const API_URL = import.meta.env.VITE_API_URL;
@@ -46,6 +49,8 @@ export const YtToMp4 = () => {
     } catch (err) {
       console.error("Download error:", err);
       alert("Failed to download MP4. Check console for details.");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -57,8 +62,17 @@ export const YtToMp4 = () => {
           placeholder="YouTube Link"
           className={styles.linkInput}
           onChange={handleLinkChange}
+          value={yt_link}
+          disabled={isLoading}
         />
-        <button onClick={handleDownload}>Download Video</button>
+        <button
+          onClick={handleDownload}
+          disabled={isLoading}
+          className={isLoading ? styles.loadingButton : ""}
+        >
+          {isLoading ? "Converting..." : "Download Video"}
+        </button>
+        {isLoading && <div className={styles.loadingText}>Loading...</div>}
       </div>
     </>
   );

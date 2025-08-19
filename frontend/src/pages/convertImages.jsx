@@ -4,6 +4,7 @@ import styles from "./pages.module.css";
 export const ConvertImages = () => {
   const [files, setFiles] = useState([]);
   const [format, setFormat] = useState("png");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = (e) => {
     setFiles(e.target.files);
@@ -14,6 +15,8 @@ export const ConvertImages = () => {
       alert("Please select at least one file");
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const formData = new FormData();
@@ -42,6 +45,8 @@ export const ConvertImages = () => {
     } catch (error) {
       console.error("Error during conversion:", error);
       alert("Error converting images. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,15 +59,27 @@ export const ConvertImages = () => {
           multiple
           accept="image/*"
           onChange={handleFileChange}
+          disabled={isLoading}
         />
-        <select value={format} onChange={(e) => setFormat(e.target.value)}>
+        <select
+          value={format}
+          onChange={(e) => setFormat(e.target.value)}
+          disabled={isLoading}
+        >
           <option value="png">PNG</option>
           <option value="jpg">JPG</option>
           <option value="webp">WEBP</option>
           <option value="ico">ICO</option>
         </select>
       </div>
-      <button onClick={handleConvert}>Convert</button>
+      <button
+        onClick={handleConvert}
+        disabled={isLoading}
+        className={isLoading ? styles.loadingButton : ""}
+      >
+        {isLoading ? "Converting..." : "Convert"}
+      </button>
+      {isLoading && <div className={styles.loadingText}>Loading...</div>}
     </div>
   );
 };

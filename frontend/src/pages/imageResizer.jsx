@@ -5,6 +5,7 @@ export const ImageResizer = () => {
   const [files, setFiles] = useState([]);
   const [height, setHeight] = useState(200);
   const [width, setWidth] = useState(200);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = (e) => {
     // Convert FileList to array
@@ -29,6 +30,8 @@ export const ImageResizer = () => {
       alert("Please specify at least one dimension (width or height)");
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const formData = new FormData();
@@ -68,6 +71,8 @@ export const ImageResizer = () => {
       } else {
         alert(`Error resizing images: ${error.message}`);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,6 +85,7 @@ export const ImageResizer = () => {
         multiple
         accept="image/*"
         onChange={handleFileChange}
+        disabled={isLoading}
       />
       <div className={styles.config}>
         <h3>Width: </h3>
@@ -88,6 +94,7 @@ export const ImageResizer = () => {
           value={width}
           onChange={handleWidthChange}
           placeholder="pixels"
+          disabled={isLoading}
         />
         <h3>Height: </h3>
         <input
@@ -95,9 +102,17 @@ export const ImageResizer = () => {
           value={height}
           onChange={handleHeightChange}
           placeholder="pixels"
+          disabled={isLoading}
         />
       </div>
-      <button onClick={handleResize}>Resize</button>
+      <button
+        onClick={handleResize}
+        disabled={isLoading}
+        className={isLoading ? styles.loadingButton : ""}
+      >
+        {isLoading ? "Resizing..." : "Resize"}
+      </button>
+      {isLoading && <div className={styles.loadingText}>Loading...</div>}
     </div>
   );
 };

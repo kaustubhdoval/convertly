@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 export const YtToMp3 = () => {
   const [yt_link, setYtLink] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLinkChange = (e) => {
     setYtLink(e.target.value);
@@ -13,6 +14,8 @@ export const YtToMp3 = () => {
       alert("Please Enter a Link");
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const API_URL = import.meta.env.VITE_API_URL;
@@ -46,6 +49,8 @@ export const YtToMp3 = () => {
     } catch (err) {
       console.error("Download error:", err);
       alert("Failed to download MP3. Check console for details.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,8 +64,16 @@ export const YtToMp3 = () => {
           value={yt_link}
           className={styles.linkInput}
           onChange={handleLinkChange}
+          disabled={isLoading}
         />
-        <button onClick={handleDownload}>Download Audio</button>
+        <button
+          onClick={handleDownload}
+          disabled={isLoading}
+          className={isLoading ? styles.loadingButton : ""}
+        >
+          {isLoading ? "Converting..." : "Download Audio"}
+        </button>
+        {isLoading && <div className={styles.loadingText}>Loading...</div>}
       </div>
     </>
   );
