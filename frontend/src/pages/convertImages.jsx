@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./convertImages.module.css";
+import styles from "./pages.module.css";
 
 export const ConvertImages = () => {
   const [files, setFiles] = useState([]);
@@ -47,7 +47,7 @@ export const ConvertImages = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Image Conversion</h2>
+      <h1>Image Conversion</h1>
       <div className="row">
         <input
           type="file"

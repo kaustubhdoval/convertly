@@ -32,10 +32,10 @@
 .card {
   width: 30%;
   padding: 1.5rem 2rem;
-  border: 2px solid var(--color-action);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 20px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   text-decoration: none;
 }
 
@@ -53,4 +53,5 @@
 
 .card a {
   text-decoration: none;
+  color: var(--color-action);
 }

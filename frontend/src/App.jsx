@@ -7,7 +7,7 @@ import { Footer } from "./components/footer/footer";
 import { AllTools } from "./components/allTools/allTools";
 
 import { Home } from "./pages/home/home";
-import { ConvertImages } from "./pages/convertImages/convertImages";
+import { ConvertImages } from "./pages/convertImages";
 import { ImageResizer } from "./pages/imageResizer";
 import { YtToMp3 } from "./pages/ytToMp3";
 import { YtToMp4 } from "./pages/ytToMp4";
