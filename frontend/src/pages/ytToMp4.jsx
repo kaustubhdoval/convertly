@@ -35,7 +35,16 @@ export const YtToMp4 = () => {
       }
 
       const contentDisposition = response.headers.get("Content-Disposition");
-      const filename = contentDisposition?.split("filename=")[1] || "video.mp4";
+
+      let filename = "video.mp4";
+
+      if (contentDisposition) {
+        // Extract filename from Content-Disposition header
+        const filenameMatch = contentDisposition.match(/filename="([^"]+)"/);
+        if (filenameMatch) {
+          filename = filenameMatch[1];
+        }
+      }
 
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);

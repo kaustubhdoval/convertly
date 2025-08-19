@@ -35,7 +35,16 @@ export const YtToMp3 = () => {
       }
 
       const contentDisposition = response.headers.get("Content-Disposition");
-      const filename = contentDisposition?.split("filename=")[1] || "audio.mp3";
+
+      let filename = "audio.mp3";
+
+      if (contentDisposition) {
+        // Extract filename from Content-Disposition header
+        const filenameMatch = contentDisposition.match(/filename="([^"]+)"/);
+        if (filenameMatch) {
+          filename = filenameMatch[1];
+        }
+      }
 
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
